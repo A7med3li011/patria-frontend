@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 export default function Kitchen() {
   const navigate = useNavigate();
   const token = useSelector((store) => store.user.token);
+  const user = useSelector((store) => store.user.user);
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -217,13 +218,15 @@ export default function Kitchen() {
           <h1 className="text-2xl md:text-3xl lg:text-4xl text-white">
             Kitchens
           </h1>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-popular hover:bg-popular/90 transition-colors duration-200 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-200 w-full sm:w-auto flex items-center gap-2"
-          >
-            <Plus size={20} />
-            Add Kitchen
-          </button>
+          {user.role != "staff" && (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-popular  hover:bg-popular/90 transition-colors duration-200 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-200 w-full sm:w-auto flex items-center gap-2"
+            >
+              <Plus size={20} />
+              Add Kitchen
+            </button>
+          )}
         </div>
 
         {/* Kitchen Grid */}

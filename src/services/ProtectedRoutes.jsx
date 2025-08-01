@@ -19,6 +19,7 @@ export default function ProtectedRoutes({ children }) {
       .get(`${baseUrl}/auth/getuser/${localStorage.getItem("patriaUser")}`)
       .then((res) => {
         dispatch(login(res.data));
+        console.log(res.data);
       })
       .catch(() => {
         localStorage.clear();
