@@ -73,8 +73,8 @@ export default function SideBar() {
     {
       title: "Attendance",
       icon: reservationIcon,
-      link: "/kitchen",
-      access: ["admin", "staff", "waiter"],
+      link: "/attendance",
+      access: ["admin"],
     },
   ];
 
@@ -83,7 +83,7 @@ export default function SideBar() {
       <div className="">
         <img className="w-full" src={logo} />
       </div>
-      
+
       {/* Navigation items - takes remaining space */}
       <div className="flex-1 flex flex-col">
         {routes.map(

@@ -1,3 +1,10 @@
+import RoleTest from "../components/RoleTest";
+
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <RoleTest />
+    </div>
+  );
 }
