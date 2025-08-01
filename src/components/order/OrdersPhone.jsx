@@ -5,7 +5,7 @@ import { getAllOrders, updateOrder } from "../../services/apis";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
 
-export default function AllOrders() {
+export default function OrdersPhone() {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const [pagination, setPagination] = useState({
@@ -22,7 +22,7 @@ export default function AllOrders() {
     error,
   } = useQuery({
     queryKey: ["all-orders", pagination.page],
-    queryFn: () => getAllOrders(pagination.page, token, 2),
+    queryFn: () => getAllOrders(pagination.page, token, 1),
   });
 
   const orderList = orderResponse?.data?.data || [];

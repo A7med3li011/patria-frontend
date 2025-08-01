@@ -18,6 +18,21 @@ export async function add_staff(body, token) {
 
   return data;
 }
+export async function dashboaordmain() {
+  const { data } = await axios.get(`${baseUrl}/order/stats`);
+
+  return data;
+}
+export async function ordersWeekly() {
+  const { data } = await axios.get(`${baseUrl}/order/weekly`);
+
+  return data;
+}
+export async function ordersMonthly() {
+  const { data } = await axios.get(`${baseUrl}/order/revenue/monthly`);
+
+  return data;
+}
 export async function get_staff_by_id(id, token) {
   const { data } = await axios.get(`${baseUrl}/auth/getuser/${id}`, {
     headers: {
@@ -118,8 +133,8 @@ export async function getproducts(token) {
 
   return data.data;
 }
-export async function getAllOrders(page, token) {
-  const data = await axios.get(`${baseUrl}/order/?page=${page}`, {
+export async function getAllOrders(page, token, bool) {
+  const data = await axios.get(`${baseUrl}/order/?page=${page}&from=${bool}`, {
     headers: {
       token: `${token}`,
     },
