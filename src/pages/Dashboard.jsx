@@ -42,15 +42,6 @@ export default function Dashboard() {
     queryFn: ordersMonthly,
   });
 
-  const revenueData = [
-    { month: "Jan", revenue: 45000, orders: 320 },
-    { month: "Feb", revenue: 52000, orders: 380 },
-    { month: "Mar", revenue: 48000, orders: 340 },
-    { month: "Apr", revenue: 61000, orders: 420 },
-    { month: "May", revenue: 55000, orders: 390 },
-    { month: "Jun", revenue: 67000, orders: 480 },
-  ];
-
   const colors = ["#8B5CF6", "#06B6D4", "#10B981", "#F59E0B", "#EF4444"];
 
   const StatCard = ({ icon: Icon, title, value, change, color = "purple" }) => {

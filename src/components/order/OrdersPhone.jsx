@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 export default function OrdersPhone() {
   const [selectedOrder, setSelectedOrder] = useState(null);
-
+  const [search, setSearch] = useState();
   const [pagination, setPagination] = useState({
     total: 0,
     page: 1,
@@ -21,8 +21,8 @@ export default function OrdersPhone() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["all-orders", pagination.page],
-    queryFn: () => getAllOrders(pagination.page, token, 1),
+    queryKey: ["all-orders-phone", pagination.page, search],
+    queryFn: () => getAllOrders(pagination.page, token, 1, search),
   });
 
   const orderList = orderResponse?.data?.data || [];
@@ -369,7 +369,15 @@ export default function OrdersPhone() {
   return (
     <div className="p-6">
       {/* Header */}
-
+      <div className="flex justify-end ">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="px-3 block  border-[1px] border-[#FFBC0F] mb-10  py-2 rounded-md focus:outline-none bg-black"
+          placeholder="Search here"
+        />
+      </div>
       {/* Table */}
       <div className="bg-secondary rounded-lg shadow-sm overflow-hidden">
         <div className="overflow-x-auto">

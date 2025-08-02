@@ -133,12 +133,15 @@ export async function getproducts(token) {
 
   return data.data;
 }
-export async function getAllOrders(page, token, bool) {
-  const data = await axios.get(`${baseUrl}/order/?page=${page}&from=${bool}`, {
-    headers: {
-      token: `${token}`,
-    },
-  });
+export async function getAllOrders(page, token, bool, search) {
+  const data = await axios.get(
+    `${baseUrl}/order/?page=${page}&from=${bool}&search=${search || ""}`,
+    {
+      headers: {
+        token: `${token}`,
+      },
+    }
+  );
 
   return data;
 }
