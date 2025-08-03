@@ -333,7 +333,7 @@ export default function MakeOrder() {
                   </h3>
 
                   <div className="text-xs sm:text-sm font-bold text-popular mb-3 lg:mb-4">
-                    ${product.price?.toFixed(2) || "0.00"}
+                    {product.price?.toFixed(2) || "0.00"} EG
                   </div>
 
                   {/* Action buttons */}
@@ -404,13 +404,13 @@ export default function MakeOrder() {
                         {/* Show base price and extras separately */}
                         <div className="text-xs xl:text-sm mt-2 space-y-1">
                           <div className="text-gray-300">
-                            <span className="font-medium">Base Price:</span> $
-                            {item.price?.toFixed(2) || "0.00"}
+                            <span className="font-medium">Base Price:</span>
+                            {item.price?.toFixed(2) || "0.00"} EG
                           </div>
 
                           {item.customizationPrice > 0 && (
                             <div className="text-yellow-400">
-                              <span className="font-medium">Extras:</span> +$
+                              <span className="font-medium">Extras:</span> +EG
                               {item.customizationPrice?.toFixed(2)}
                             </div>
                           )}
@@ -433,7 +433,7 @@ export default function MakeOrder() {
                                         >
                                           <span>• {extra.name}</span>
                                           <span>
-                                            +${extra.price.toFixed(2)}
+                                            {extra.price.toFixed(2)} EG
                                           </span>
                                         </div>
                                       )
@@ -461,9 +461,10 @@ export default function MakeOrder() {
                         )}
 
                         <p className="text-popular font-bold text-sm xl:text-base mt-2">
-                          Total: $
+                          Total:
                           {(item.finalPrice || item.price)?.toFixed(2) ||
-                            "0.00"}
+                            "0.00"}{" "}
+                          EG
                         </p>
                       </div>
                       <button
@@ -503,10 +504,10 @@ export default function MakeOrder() {
                       </div>
                       <div className="text-right">
                         <p className="text-xs xl:text-sm text-gray-400">
-                          $
                           {(
                             (item.finalPrice || item.price) * item.quantity
-                          ).toFixed(2)}
+                          ).toFixed(2)}{" "}
+                          EG
                         </p>
                       </div>
                     </div>
@@ -524,7 +525,7 @@ export default function MakeOrder() {
                     Subtotal:
                   </span>
                   <span className="text-base xl:text-lg font-semibold text-popular">
-                    ${total.toFixed(2)}
+                    {total.toFixed(2)} EG
                   </span>
                 </div>
 
@@ -533,14 +534,14 @@ export default function MakeOrder() {
                     VAT (20%):
                   </span>
                   <span className="text-base xl:text-lg font-semibold text-popular">
-                    ${(total * 0.2).toFixed(2)}
+                    {(total * 0.2).toFixed(2)} EG
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center pt-3 border-t border-gray-600">
                   <span className="text-base xl:text-lg font-bold">Total:</span>
                   <span className="text-lg xl:text-xl font-bold text-popular">
-                    ${(total + total * 0.2).toFixed(2)}
+                    {(total + total * 0.2).toFixed(2)} EG
                   </span>
                 </div>
               </div>
@@ -616,12 +617,12 @@ export default function MakeOrder() {
                           {/* Show base price and extras separately */}
                           <div className="text-xs mt-1 space-y-1">
                             <div className="text-gray-300">
-                              Base: ${item.price?.toFixed(2) || "0.00"}
+                              Base: {item.price?.toFixed(2) || "0.00"} EG
                             </div>
 
                             {item.customizationPrice > 0 && (
                               <div className="text-yellow-400">
-                                Extras: +${item.customizationPrice?.toFixed(2)}
+                                Extras: {item.customizationPrice?.toFixed(2)} EG
                               </div>
                             )}
                           </div>
@@ -645,7 +646,7 @@ export default function MakeOrder() {
                                           >
                                             <span>• {extra.name}</span>
                                             <span className="text-yellow-400">
-                                              +${extra.price.toFixed(2)}
+                                              {extra.price.toFixed(2)} EG
                                             </span>
                                           </div>
                                         )
@@ -677,9 +678,10 @@ export default function MakeOrder() {
                           )}
 
                           <p className="text-popular font-bold mt-1">
-                            Total: $
+                            Total:
                             {(item.finalPrice || item.price)?.toFixed(2) ||
-                              "0.00"}
+                              "0.00"}{" "}
+                            EG
                           </p>
                         </div>
                         <button
@@ -729,7 +731,7 @@ export default function MakeOrder() {
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-sm font-bold">Total:</span>
                   <span className="text-md font-bold text-popular">
-                    ${total.toFixed(2)}
+                    {total.toFixed(2)} EG
                   </span>
                 </div>
 
@@ -740,7 +742,7 @@ export default function MakeOrder() {
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-sm font-bold">Total After Vat:</span>
                   <span className="text-md font-bold text-popular">
-                    ${(total + total * 0.2).toFixed(2)}
+                    {(total + total * 0.2).toFixed(2)} EG
                   </span>
                 </div>
 
@@ -795,7 +797,7 @@ export default function MakeOrder() {
                   {customizationOptions.extras.map((extra) => (
                     <label
                       key={extra.id}
-                      className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
+                      className="flex items-center text-gray-800 justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
                     >
                       <div className="flex items-center">
                         <input
@@ -813,7 +815,7 @@ export default function MakeOrder() {
                         <span className="font-medium">{extra.name}</span>
                       </div>
                       <span className="text-popular font-bold">
-                        +${extra.price.toFixed(2)}
+                        {extra.price.toFixed(2)} EG
                       </span>
                     </label>
                   ))}
@@ -873,20 +875,20 @@ export default function MakeOrder() {
               <div className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex justify-between items-center mb-2">
                   <span>Base Price:</span>
-                  <span>${selectedProduct.price?.toFixed(2) || "0.00"}</span>
+                  <span>{selectedProduct.price?.toFixed(2) || "0.00"} EG</span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span>Customizations:</span>
-                  <span>+${calculateCustomizationPrice().toFixed(2)}</span>
+                  <span>{calculateCustomizationPrice().toFixed(2)} EG</span>
                 </div>
                 <div className="flex justify-between items-center font-bold text-lg border-t pt-2">
                   <span>Total:</span>
                   <span className="text-popular">
-                    $
                     {(
                       (selectedProduct.price || 0) +
                       calculateCustomizationPrice()
-                    ).toFixed(2)}
+                    ).toFixed(2)}{" "}
+                    EG
                   </span>
                 </div>
               </div>

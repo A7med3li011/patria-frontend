@@ -24,7 +24,6 @@ import EachKitchen from "./pages/EachKitchen";
 import MakeOrder from "./components/order/MakeOrder";
 import { Table } from "lucide-react";
 import Tables from "./pages/Tables";
-import Attendance from "./pages/Attendance";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -45,165 +44,157 @@ function App() {
         </ProtectedRoutes>
       ),
       children: [
-        { 
-          path: "/Dashboard", 
+        {
+          path: "/Dashboard",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Dashboard />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/staff", 
+        {
+          path: "/staff",
           element: (
             <RoleBasedRoute allowedRoles={["admin"]}>
               <Staff />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/add-staff", 
+        {
+          path: "/add-staff",
           element: (
             <RoleBasedRoute allowedRoles={["admin"]}>
               <AddStaff />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/edit-staff/:id", 
+        {
+          path: "/edit-staff/:id",
           element: (
             <RoleBasedRoute allowedRoles={["admin"]}>
               <Editstaff />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/service", 
+        {
+          path: "/service",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Managment />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/add-category", 
+        {
+          path: "/add-category",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <CategoryAdd />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/add-sub-category", 
+        {
+          path: "/add-sub-category",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <SubCategoryAdd />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/add-dish", 
+        {
+          path: "/add-dish",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <DishAdd />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/inventory", 
+        {
+          path: "/inventory",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Inventory />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/kitchen", 
+        {
+          path: "/kitchen",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "staff", "operation"]}>
               <Kitchen />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/kitchen/:id", 
+        {
+          path: "/kitchen/:id",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "staff", "operation"]}>
               <EachKitchen />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/follow-order", 
+        {
+          path: "/follow-order",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation", "waiter"]}>
               <OrderTracking />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/menu", 
+        {
+          path: "/menu",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Menu />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/orders-tables", 
+        {
+          path: "/orders-tables",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation", "waiter"]}>
               <OrdersAndTables />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/make-order", 
+        {
+          path: "/make-order",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation", "waiter"]}>
               <MakeOrder />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/table", 
+        {
+          path: "/table",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation", "waiter"]}>
               <Tables />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/reports", 
+        {
+          path: "/reports",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Reports />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/reservation", 
+        {
+          path: "/reservation",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Reservation />
             </RoleBasedRoute>
-          ) 
+          ),
         },
-        { 
-          path: "/managment", 
+        {
+          path: "/managment",
           element: (
             <RoleBasedRoute allowedRoles={["admin", "operation"]}>
               <Managment />
             </RoleBasedRoute>
-          ) 
-        },
-        { 
-          path: "/attendance", 
-          element: (
-            <RoleBasedRoute allowedRoles={["admin"]}>
-              <Attendance />
-            </RoleBasedRoute>
-          ) 
+          ),
         },
         { path: "*", element: <NotFound /> },
       ],

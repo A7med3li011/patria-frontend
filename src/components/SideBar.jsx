@@ -4,15 +4,16 @@ import peopleIcon from "../assets/people-fill.png";
 // import menuIcom from "../assets/files.png";
 // import inventoryIcon from "../assets/inevntory.png";
 import reportIcon from "../assets/sheet.png";
-import tablesIcon from "../assets/tables.png";
+import tablesIcon from "../assets/icons8-order-food-100.png";
 import reservationIcon from "../assets/calendare.png";
 import kitchenIcon from "../assets/kitchen.png";
 import logoutIcon from "../assets/logout-outlined.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function SideBar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((store) => store.user.user);
   console.log(user.role);
 
@@ -25,7 +26,7 @@ export default function SideBar() {
     },
 
     {
-      title: "Sercice Managment",
+      title: "Service Managment",
       icon: reportIcon,
       link: "/managment",
       access: ["admin", "operation"],
@@ -70,12 +71,6 @@ export default function SideBar() {
       link: "/kitchen",
       access: ["admin", "staff", "operation"],
     },
-    {
-      title: "Attendance",
-      icon: reservationIcon,
-      link: "/attendance",
-      access: ["admin"],
-    },
   ];
 
   return (
@@ -97,9 +92,13 @@ export default function SideBar() {
                 <img
                   src={ele.icon}
                   alt="icon"
-                  className="mb-2 w-[30px] lg:w-[30px]"
+                  className={`mb-2 w-[30px] lg:w-[30px] transition-all duration-300 ease-in-out ${
+                    location.pathname === ele.link
+                      ? "filter brightness-0 invert"
+                      : ""
+                  }`}
                 />
-                <p className="text-sm text-center">{ele.title}</p>
+                <p className={`text-sm text-center`}>{ele.title}</p>
               </div>
             )
         )}

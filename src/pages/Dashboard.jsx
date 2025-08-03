@@ -53,10 +53,10 @@ export default function Dashboard() {
     };
 
     return (
-      <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800 hover:shadow-xl transition-shadow duration-300">
+      <div className="bg-[#FFBC0F] rounded-xl shadow-lg p-6 border border-gray-800 hover:shadow-xl transition-shadow duration-300">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-gray-400 text-sm font-medium">{title}</p>
+            <p className="text-gray-700 text-sm font-medium">{title}</p>
             <p className="text-3xl font-bold text-white mt-2">{value}</p>
             <div className="flex items-center mt-2">
               <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
@@ -74,7 +74,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-black p-6">
+    <div className="min-h-screen bg-secondary p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -91,7 +91,7 @@ export default function Dashboard() {
           <StatCard
             icon={DollarSign}
             title="Total Revenue"
-            value={`${data?.revenue || 0} $`}
+            value={`${data?.revenue || 0} EG`}
             color="purple"
           />
           <StatCard
@@ -117,14 +117,14 @@ export default function Dashboard() {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Revenue Chart */}
-          <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800">
+          <div className="bg-[#FFBC0F] rounded-xl shadow-lg p-6 border border-gray-800">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-white">
                 Revenue Overview
               </h2>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <span className="text-sm text-gray-400">Revenue</span>
+                <span className="text-sm text-gray-600">Revenue</span>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={300}>
@@ -132,9 +132,9 @@ export default function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis
                   dataKey="month"
-                  tick={{ fontSize: 12, fill: "#9CA3AF" }}
+                  tick={{ fontSize: 12, fill: "#374151" }}
                 />
-                <YAxis tick={{ fontSize: 12, fill: "#9CA3AF" }} />
+                <YAxis tick={{ fontSize: 12, fill: "#374151" }} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#1F2937",
@@ -149,21 +149,21 @@ export default function Dashboard() {
           </div>
 
           {/* Daily Orders Chart */}
-          <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800">
+          <div className="bg-[#FFBC0F] rounded-xl shadow-lg p-6 border border-gray-800">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-white">
                 Weekly Orders
               </h2>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-cyan-500 rounded-full"></div>
-                <span className="text-sm text-gray-400">Orders</span>
+                <span className="text-sm text-gray-600">Orders</span>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={weeklyData || []}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="day" tick={{ fontSize: 12, fill: "#9CA3AF" }} />
-                <YAxis tick={{ fontSize: 12, fill: "#9CA3AF" }} />
+                <XAxis dataKey="day" tick={{ fontSize: 12, fill: "#374151" }} />
+                <YAxis tick={{ fontSize: 12, fill: "#374151" }} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#1F2937",
@@ -187,7 +187,7 @@ export default function Dashboard() {
         {/* Bottom Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Popular Dishes */}
-          <div className="lg:col-span-2 bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800">
+          <div className="lg:col-span-2 bg-[#FFBC0F] rounded-xl shadow-lg p-6 border border-gray-800">
             <h2 className="text-xl font-semibold text-white mb-6">
               Popular Dishes
             </h2>
@@ -216,14 +216,14 @@ export default function Dashboard() {
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: colors[index] }}
                   ></div>
-                  <span className="text-sm text-gray-400">{dish.name}</span>
+                  <span className="text-sm text-gray-600">{dish.name}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Quick Stats */}
-          <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800">
+          <div className="bg-[#FFBC0F] rounded-xl shadow-lg p-6 border border-gray-800">
             <h2 className="text-xl font-semibold text-white mb-6">
               Quick Stats
             </h2>
@@ -235,7 +235,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="font-medium text-white"># Operators</p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-gray-600">
                       {data?.countOperators}
                     </p>
                   </div>
@@ -249,7 +249,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="font-medium text-white"># Chefs</p>
-                    <p className="text-sm text-gray-400">{data?.countStaff}</p>
+                    <p className="text-sm text-gray-600">{data?.countStaff}</p>
                   </div>
                 </div>
               </div>
@@ -261,7 +261,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="font-medium text-white">Waiters</p>
-                    <p className="text-sm text-gray-400">{data?.countWaiter}</p>
+                    <p className="text-sm text-gray-600">{data?.countWaiter}</p>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@ export default function Managment() {
     <div>
       <div className="flex justify-between items-center flex-wrap">
         <h3 className=" font-semibold  tracking-wider text-lg">
-          Sercive Managment
+          Service Managment
         </h3>
         <div className="flex items-center border-[1px] rounded-md overflow-x-auto hide-scrollbar border-popular w-full sm:w-fit max-w-full">
           <button

@@ -133,9 +133,22 @@ export async function getproducts(token) {
 
   return data.data;
 }
-export async function getAllOrders(page, token, bool, search) {
+export async function getAllOrdersWebsite(page, token, bool, search) {
   const data = await axios.get(
-    `${baseUrl}/order/?page=${page}&from=${bool}&search=${search || ""}`,
+    `${baseUrl}/order/?page=${page}&from=false&search=${search || ""}`,
+    {
+      headers: {
+        token: `${token}`,
+      },
+    }
+  );
+
+  return data;
+}
+
+export async function getAllOrdersApp(page, token, bool, search) {
+  const data = await axios.get(
+    `${baseUrl}/order/?page=${page}&from=true&search=${search || ""}`,
     {
       headers: {
         token: `${token}`,
