@@ -1,32 +1,18 @@
-import React, { useState } from "react";
-import { Plus, Minus, Trash2, ShoppingCart, X, Settings } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  Trash2,
+  ShoppingCart,
+  X,
+  Settings,
+  Edit2,
+  Check,
+} from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { getproducts, imageBase } from "../../services/apis";
 import { useSelector } from "react-redux";
-
-// Mock customization options - you can fetch these from your API
-const customizationOptions = {
-  extras: [
-    { id: "extra_cheese", name: "Extra Cheese", price: 2.5 },
-    { id: "extra_bacon", name: "Extra Bacon", price: 3.0 },
-    { id: "extra_mushrooms", name: "Extra Mushrooms", price: 1.5 },
-    { id: "extra_peppers", name: "Extra Peppers", price: 1.0 },
-    { id: "extra_onions", name: "Extra Onions", price: 1.0 },
-  ],
-  removals: [
-    { id: "no_tomato", name: "No Tomato", price: 0 },
-    { id: "no_onions", name: "No Onions", price: 0 },
-    { id: "no_pickles", name: "No Pickles", price: 0 },
-    { id: "no_lettuce", name: "No Lettuce", price: 0 },
-    { id: "no_sauce", name: "No Sauce", price: 0 },
-  ],
-  //   sizes: [
-  //     { id: 'small', name: 'Small', price: 0 },
-  //     { id: 'medium', name: 'Medium', price: 2.00 },
-  //     { id: 'large', name: 'Large', price: 4.00 },
-  //   ]
-};
+import { useState } from "react";
 
 export default function MakeOrder() {
   const [cart, setCart] = useState([]);
@@ -44,7 +30,28 @@ export default function MakeOrder() {
     size: "small",
     specialInstructions: "",
   });
+  const [editingExtra, setEditingExtra] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newExtra, setNewExtra] = useState({ name: "", price: "" });
+
   const token = useSelector((store) => store.user.token);
+
+  const [customizationOptions, setCustomizationOptions] = useState({
+    extras: [
+      { id: "1", name: "Extra Cheese", price: 2.5 },
+      { id: "2", name: "Extra Bacon", price: 3.0 },
+      { id: "3", name: "Extra Mushrooms", price: 1.5 },
+      { id: "4", name: "Extra Peppers", price: 1.0 },
+      { id: "5", name: "Extra Onions", price: 1.0 },
+    ],
+    removals: [
+      { id: "1", name: "No Tomato", price: 0 },
+      { id: "2", name: "No Onions", price: 0 },
+      { id: "3", name: "No Pickles", price: 0 },
+      { id: "4", name: "No Lettuce", price: 0 },
+      { id: "5", name: "No Sauce", price: 0 },
+    ],
+  });
 
   const { data, isLoading } = useQuery({
     queryKey: ["get-all-products"],
@@ -96,6 +103,58 @@ export default function MakeOrder() {
     }
   };
 
+  const EditForm = ({ extra }) => {
+    const [name, setName] = useState(extra.name);
+    const [price, setPrice] = useState(extra.price.toString());
+
+    return (
+      <div className="flex items-center justify-between p-3 border rounded-lg bg-blue-50">
+        <div className="flex items-center flex-1">
+          <input
+            type="checkbox"
+            checked={customizations.extras.includes(extra.id)}
+            onChange={(e) =>
+              handleCustomizationChange("extras", extra.id, e.target.checked)
+            }
+            className="mr-3"
+          />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="font-medium bg-white text-black border rounded focus:border-[#ffbc0f] outline-none  px-2 py-1 mr-2 flex-1"
+            placeholder="Extra name"
+          />
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="bg-white text-black border rounded focus:border-[#ffbc0f] outline-none px-2 py-1 w-20"
+            placeholder="Price"
+            step="0.01"
+            min="0"
+          />
+          <span className="ml-1 text-gray-600 font-bold">EG</span>
+        </div>
+        <div className="flex items-center gap-1 ml-2">
+          <button
+            onClick={() => handleEditingExtra(extra.id, name, price)}
+            className="text-blue-600 hover:text-blue-800 p-1"
+            disabled={!name.trim() || !price}
+          >
+            <Check className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setEditingExtra(null)}
+            className="text-red-600 hover:text-red-800 p-1"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   // Calculate customization price
   const calculateCustomizationPrice = () => {
     let price = 0;
@@ -109,6 +168,50 @@ export default function MakeOrder() {
     });
 
     return price;
+  };
+
+  // handle Add Extras
+  const handleAddExtra = () => {
+    if (newExtra.name.trim() && newExtra.price) {
+      const id =
+        Math.max(...customizationOptions.extras.map((e) => e.id), 0) + 1;
+      setCustomizationOptions((prev) => ({
+        ...prev,
+        extras: [
+          ...prev.extras,
+          { id, name: newExtra.name, price: parseFloat(newExtra.price) },
+        ],
+      }));
+      setNewExtra({ name: "", price: "" });
+      setShowAddForm(false);
+    }
+  };
+
+  // handle Edit Extras
+  const handleEditingExtra = (id, newName, newPrice) => {
+    setCustomizationOptions((prev) => ({
+      ...prev,
+      extras: prev.extras.map((extra) =>
+        extra.id == id
+          ? { ...extra, name: newName, price: parseFloat(newPrice) }
+          : extra
+      ),
+    }));
+    setEditingExtra(null);
+  };
+
+  // handle Delete Extras
+  const handleDeleteExtra = (id) => {
+    setCustomizationOptions((prev) => ({
+      ...prev,
+      extras: prev.extras.filter((extra) => extra.id != id),
+    }));
+
+    // Remove from customizations if it was selected
+    setCustomizations((prev) => ({
+      ...prev,
+      extras: prev.extras.filter((extraId) => extraId != id),
+    }));
   };
 
   // Add to cart with customizations
@@ -792,32 +895,127 @@ export default function MakeOrder() {
 
               {/* Extras */}
               <div>
-                <h4 className="font-semibold text-gray-800 mb-3">Add Extras</h4>
+                <div className="flex items-end justify-between mb-4">
+                  <h4 className="font-semibold text-gray-800 mb-3">
+                    Add Extras
+                  </h4>
+                  <button
+                    onClick={() => setShowAddForm(true)}
+                    className="bg-popular hover:bg-popular/50 text-white px-3 py-2 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1"
+                  >
+                    <Settings className="w-3 h-3 sm:w-4 sm:h-4" />
+                    Custom
+                  </button>
+                </div>
                 <div className="space-y-2">
-                  {customizationOptions.extras.map((extra) => (
-                    <label
-                      key={extra.id}
-                      className="flex items-center text-gray-800 justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
-                    >
-                      <div className="flex items-center">
+                  {showAddForm && (
+                    <div className="flex items-center justify-between p-3 border-2 border-dashed border-[#ffbc0f] rounded-lg bg-[#f7e6bc]">
+                      <div className="flex items-center flex-1">
+                        <div className="w-6 mr-3"></div>{" "}
+                        {/* Spacer for alignment */}
                         <input
-                          type="checkbox"
-                          checked={customizations.extras.includes(extra.id)}
+                          type="text"
+                          value={newExtra.name}
                           onChange={(e) =>
-                            handleCustomizationChange(
-                              "extras",
-                              extra.id,
-                              e.target.checked
-                            )
+                            setNewExtra((prev) => ({
+                              ...prev,
+                              name: e.target.value,
+                            }))
                           }
-                          className="mr-3"
+                          className="font-medium bg-white text-black border rounded focus:border-[#ffbc0f] outline-none px-2 py-1 mr-2 flex-1"
+                          placeholder="Enter extra name"
                         />
-                        <span className="font-medium">{extra.name}</span>
+                        <input
+                          type="number"
+                          value={newExtra.price}
+                          onChange={(e) =>
+                            setNewExtra((prev) => ({
+                              ...prev,
+                              price: e.target.value,
+                            }))
+                          }
+                          className="bg-white text-black border rounded focus:border-[#ffbc0f] outline-none px-2 py-1 w-20"
+                          placeholder="0.00"
+                          step="0.01"
+                          min="0"
+                        />
+                        <span className="ml-1 text-gray-600 font-bold">EG</span>
                       </div>
-                      <span className="text-popular font-bold">
-                        {extra.price.toFixed(2)} EG
-                      </span>
-                    </label>
+                      <div className="flex items-center gap-1 ml-2">
+                        <button
+                          onClick={handleAddExtra}
+                          className="text-blue-600 hover:text-blue-800 p-1"
+                          disabled={!newExtra.name.trim() || !newExtra.price}
+                        >
+                          <Check className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowAddForm(false);
+                            setNewExtra({ name: "", price: "" });
+                          }}
+                          className="text-red-600 hover:text-red-800 p-1"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {customizationOptions.extras.map((extra) => (
+                    <div key={extra.id}>
+                      {editingExtra === extra.id ? (
+                        <EditForm extra={extra} />
+                      ) : (
+                        <label className="flex items-center text-gray-800 justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                          <div className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={customizations.extras.includes(extra.id)}
+                              onChange={(e) =>
+                                handleCustomizationChange(
+                                  "extras",
+                                  extra.id,
+                                  e.target.checked
+                                )
+                              }
+                              className="mr-3"
+                            />
+                            <span className="font-medium">{extra.name}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-gray-600 font-bold">
+                              {extra.price.toFixed(2)} EG
+                            </span>
+                            <div className="flex items-center gap-1">
+                              <button
+                                className="text-blue-600 hover:text-blue-800 p-1"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setEditingExtra(extra.id);
+                                }}
+                              >
+                                <Edit2 className="w-3 h-3" />
+                              </button>
+                              <button
+                                className="text-red-600 hover:text-red-800 p-1"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  if (
+                                    window.confirm(
+                                      "Are you sure you want to remove this extra?"
+                                    )
+                                  ) {
+                                    handleDeleteExtra(extra.id);
+                                  }
+                                }}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                        </label>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>

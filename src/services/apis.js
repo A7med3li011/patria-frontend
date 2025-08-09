@@ -257,3 +257,13 @@ export async function getStaff(token) {
 
   return data.data || [];
 }
+
+export async function getAllExtras(token) {
+  const { data } = await axios.get(`${baseUrl}/products/:productId/extras`, {
+    headers: {
+      token: `${token}`,
+    },
+  });
+
+  return data;
+}
